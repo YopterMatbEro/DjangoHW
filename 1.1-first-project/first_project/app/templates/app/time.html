@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Time</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function updateTime() {
+                var currentTime = new Date();
+                var formattedTime = currentTime.toLocaleString('en-US', { hour12: false });
+                $('#current-time').text(formattedTime);
+            }
+
+            updateTime();
+            setInterval(updateTime, 1000);
+        });
+</script>
+</head>
+<body>
+    <h1>Dynamic Time</h1>
+    <p>Current time: <span id="current-time"></span></p>
+    <a href="{{ home }}">{{ 'На главную' }}</a>
+</body>
+</html>

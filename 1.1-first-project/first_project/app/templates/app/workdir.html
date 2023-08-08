@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Рабочая директория</title>
+</head>
+<body>
+    <h1>Рабочая директория:</h1>
+    <br>
+    {% for wd in workdir %}
+        {{ wd }}
+        <br>
+    {% endfor %}
+
+    <br>
+    <a href="{{ home }}">{{ 'На главную' }}</a>
+</body>
+</html>
