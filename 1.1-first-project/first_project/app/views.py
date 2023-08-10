@@ -39,7 +39,8 @@ def workdir_view(request):
     # который возвращает список файлов в рабочей 
     # директории
     template_name = 'app/workdir.html'
-    workdir = [file for file in os.listdir()]
+    directory = 'F:/HomeWorks/Django/dj-homeworks/1.1-first-project/first_project'
+    workdir = [file for file in os.listdir(directory)]
     home = reverse('home')
     context = {
         'workdir': workdir,
