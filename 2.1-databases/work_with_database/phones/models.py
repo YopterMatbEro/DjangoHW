@@ -9,7 +9,7 @@ class Phone(models.Model):
     name = models.CharField(max_length=50, verbose_name='Модель')
     price = models.IntegerField(validators=[MinValueValidator(0)], verbose_name='Стоимость')
     image = models.CharField(max_length=255)
-    release_date = models.DateField(default='2010-01-01', verbose_name='Дата')
+    release_date = models.DateField(default='2010-01-01', verbose_name='Дата выпуска')
     lte_exists = models.BooleanField(default=False, verbose_name='4G')
     slug = models.SlugField(max_length=50, unique=True)
 

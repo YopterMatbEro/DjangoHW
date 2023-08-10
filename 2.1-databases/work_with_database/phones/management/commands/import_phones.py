@@ -13,12 +13,25 @@ class Command(BaseCommand):
             phones = list(csv.DictReader(file, delimiter=';'))
 
         for phone in phones:
+            # print(phone)
             # TODO: Добавьте сохранение модели
-            Phone.objects.create(
+            # created=False - запись присутствует /True - отсутствует
+            phone_obj, created = Phone.objects.get_or_create(
                 id=phone['id'],
-                name=phone['name'],
-                image=phone['image'],
-                price=phone['price'],
-                release_date=phone['release_date'],
-                lte_exists=phone['lte_exists'],
+                defaults={
+                    'name': phone['name'],
+                    'image': phone['image'],
+                    'price': phone['price'],
+                    'release_date': phone['release_date'],
+                    'lte_exists': phone['lte_exists'],
+                }
             )
+
+            if not created:
+                # Обновляем существующую запись
+                phone_obj.name = phone['name']
+                phone_obj.image = phone['image']
+                phone_obj.price = phone['price']
+                phone_obj.release_date = phone['release_date']
+                phone_obj.lte_exists = phone['lte_exists']
+                phone_obj.save()
