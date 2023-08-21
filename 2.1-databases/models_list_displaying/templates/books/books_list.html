@@ -3,21 +3,36 @@
 
 {% block title %}Каталог книг{% endblock %}
 {% block content %}
+
     <div class="container">
         <div class="header">
             <h1><a href="/books">Каталог</a></h1>
         </div>
         <div class="row">
-            <div class="book col-md-4">
-                <h2>Сияние</h2>
-                <p>Автор: Стивен Кинг</p>
-                <p>Дата публикации: 2018-09-10</p>
-            </div>
-            <div class="book col-md-4">
-                <h2>1984</h2>
-                <p>Автор: Джордж Оруэл</p>
-                <p>Дата публикации: 2015-03-11</p>
-            </div>
+            {% for book in books %}
+                <div class="book col-md-4">
+                    <h2>{{ book.name }}</h2>
+                    <p>Автор: {{book.author}}</p>
+                    {% with formatted_date=book.pub_date|date:"d.m.Y" %}
+                        <p>Дата публикации: <a href="/books/{{ formatted_date }}/">{{ formatted_date }}</a></p>
+                    {% endwith %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="pagination">
+            {% if previous_pub_date %}
+                <a href="/books/{{ previous_pub_date|date:'d.m.Y' }}/">&lt; {{ previous_pub_date|date:'d.m.Y' }}</a>
+            {% endif %}
+
+            {% if previous_pub_date and next_pub_date %}
+                &nbsp;&nbsp;&nbsp;
+            {% endif %}
+
+            {% if next_pub_date %}
+                <a href="/books/{{ next_pub_date|date:'d.m.Y' }}/">{{ next_pub_date|date:'d.m.Y' }} &gt;</a>
+            {% endif %}
         </div>
     </div>
+
 {% endblock %}
