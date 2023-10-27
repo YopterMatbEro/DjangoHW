@@ -9,7 +9,7 @@ Content-Type: application/json
 ###
 
 # создание датчика
-POST {{baseUrl}}/sensors/
+POST {{baseUrl}}/create_sensor/
 Content-Type: application/json
 
 {
@@ -42,4 +42,10 @@ Content-Type: application/json
 
 # получение информации по датчику
 GET {{baseUrl}}/sensors/1/
+Content-Type: application/json
+
+###
+
+# удаление всех датчиков
+DELETE {{baseUrl}}/sensors/
 Content-Type: application/json
