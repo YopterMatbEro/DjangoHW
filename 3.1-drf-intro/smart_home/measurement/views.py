@@ -4,7 +4,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView,
 from rest_framework.response import Response
 
 from .models import Sensor, Measurement
-from .serializers import SensorSerializer, MeasurementSerializer, SensorCreateSerializer
+from .serializers import SensorSerializer, MeasurementSerializer, SensorCreateSerializer, SensorDetailSerializer
 
 
 class SensorListView(ListAPIView):
@@ -31,6 +31,22 @@ class SensorUpdateView(UpdateAPIView):
     serializer_class = SensorSerializer
 
 
-class MeasurementView(RetrieveAPIView):
-    queryset = Measurement.objects.all()
+class MeasurementView(CreateAPIView):
     serializer_class = MeasurementSerializer
+
+    def create(self, request, *args, **kwargs):
+        sensor_name = request.data.get('sensor')
+        try:
+            sensor = Sensor.objects.get(name=sensor_name)
+        except Sensor.DoesNotExist:
+            return Response({'error': 'Sensor not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(sensor=sensor)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class SensorDetail(RetrieveAPIView):
+    serializer_class = SensorDetailSerializer
